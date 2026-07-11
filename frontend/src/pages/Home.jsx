@@ -1,0 +1,255 @@
+import { useEffect, useState } from "react"
+import { FaBus } from "react-icons/fa"
+import api from "../api/axios"
+import { Link, useNavigate } from "react-router"
+
+export default function HomePage() {
+
+    const [busDetail, setBusDetail] = useState([])
+    const navigate = useNavigate();
+
+    const [form, setForm] = useState({
+        from: "",
+        to: "",
+    })
+
+    const { from, to } = form;
+
+
+    useEffect(() => {
+        const data = localStorage.getItem("busSearch");
+
+        if (data) {
+            const parsed = JSON.parse(data);
+
+            setBusDetail(parsed.buses);
+            setForm(parsed.form);
+        }
+    }, []);
+
+
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await api.get(`/bus/search?from=${from}&to=${to}`)
+            setBusDetail(res.data.buses)
+            console.log(res.data)
+
+            localStorage.setItem(
+                "busSearch",
+                JSON.stringify({
+                    buses: res.data.buses,
+                    form,
+                })
+            );
+
+
+
+
+
+        } catch (err) {
+
+        }
+
+    }
+
+    const handledelete = () => {
+        localStorage.clear()
+        setBusDetail([])
+
+    }
+
+
+
+
+
+
+
+
+
+    return (
+        
+        <div className="min-h-screen bg-green-100">
+
+            {/* Header */}
+            <div className="bg-white shadow-md py-8 px-4">
+
+                <div className="max-w-md mx-auto text-center">
+
+                    <FaBus className="mx-auto text-5xl text-green-600" />
+
+                    <h1 className="text-3xl font-bold mt-3 text-gray-800">
+                        Bihar Bus Route
+                    </h1>
+
+                    <p className="text-gray-500 mt-2">
+                        Find buses between any two locations
+                    </p>
+
+                </div>
+
+            </div>
+
+            {/* Main Content */}
+            <div className="max-w-md mx-auto px-4 py-6">
+
+                {/* Search Form */}
+                <div className="bg-white rounded-2xl shadow-lg p-6">
+
+                    <form onSubmit={handleSubmit} className="space-y-4">
+
+                        <input
+                            name="from"
+                            type="text"
+                            placeholder="Enter From Location"
+                            value={form.from}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+                            required
+                        />
+
+                        <input
+                            name="to"
+                            type="text"
+                            placeholder="Enter To Location"
+                            value={form.to}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+                            required
+                        />
+
+                        <button
+                            type="submit"
+                            className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition"
+                        >
+                            Search Bus
+                        </button>
+
+                    </form>
+
+
+
+                    <button
+                            type="submit"
+                            className="w-1/4 bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition"
+                            onClick={handledelete}
+                        >
+                            Search Bus
+                        </button>
+
+
+
+
+                </div>
+
+                {/* Search Result */}
+                <div className="bg-green-100 rounded-2xl shadow-lg mt-6 p-5">
+
+                    <h2 className="text-xl font-semibold border-b pb-3 mb-4">
+                        Search Result
+                    </h2>
+
+                    {/* Scrollable Area */}
+                    <div className="h-[420px] overflow-y-auto pr-2 space-y-4">
+
+                        {busDetail.length > 0 ? (
+                            busDetail.map((bus) => (
+                                <Link
+                                    key={bus._id}
+                                    to={`/bus/${bus._id}`}
+                                >
+                                    <div className="bg-gray-50 border rounded-xl p-4 hover:shadow-md transition">
+                                        {/* Top */}
+                                        <div className="flex justify-between items-center">
+                                            <div>
+                                                <h3 className="text-gray-500 text-sm   ">
+                                                    {bus.busName}
+                                                </h3>
+
+                                                <p className="text-lg font-bold text-gray-800">
+                                                    {bus.busNumber}
+                                                </p>
+                                            </div>
+
+                                            <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                                                {bus.busType}
+                                            </span>
+                                        </div>
+
+                                        {/* Route */}
+                                        <div className="flex justify-between items-center mt-4 bg-white border rounded-lg p-3">
+                                            <div className="text-center">
+                                                <p className="text-xs text-gray-500">From</p>
+                                                <h4 className="font-semibold text-gray-800 capitalize">
+                                                    {bus.from}
+                                                </h4>
+                                            </div>
+
+                                            <div className="flex-1 mx-4">
+                                                <div className="border-t-2 border-dashed border-gray-300 relative">
+                                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-1 text-lg">
+                                                        🚌
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="text-center">
+                                                <p className="text-xs text-gray-500">To</p>
+                                                <h4 className="font-semibold text-gray-800 capitalize">
+                                                    {bus.to}
+                                                </h4>
+                                            </div>
+                                        </div>
+
+                                        {/* Time */}
+                                        <div className="flex justify-between items-center mt-4">
+                                            <div className="text-center">
+                                                <p className="text-xs text-gray-500">
+                                                    Departure
+                                                </p>
+
+                                                <h4 className="font-bold text-green-600">
+                                                    {bus.depart}
+                                                </h4>
+                                            </div>
+
+                                            <div className="text-gray-400 text-2xl">
+                                                🕒
+                                            </div>
+
+                                            <div className="text-center">
+                                                <p className="text-xs text-gray-500">
+                                                    Arrival
+                                                </p>
+
+                                                <h4 className="font-bold text-red-500">
+                                                    {bus.arrival}
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="flex items-center justify-center h-full text-gray-500">
+                                Search a route to view available buses.
+                            </div>
+                        )}
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    )
+}
