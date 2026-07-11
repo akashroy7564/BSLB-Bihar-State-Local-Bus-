@@ -62,11 +62,7 @@ export default function HomePage() {
 
     }
 
-    const handledelete = () => {
-        localStorage.clear()
-        setBusDetail([])
-
-    }
+    
 
 
 
@@ -135,16 +131,6 @@ export default function HomePage() {
                         </button>
 
                     </form>
-
-
-
-                    <button
-                            type="submit"
-                            className="w-1/4 bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition"
-                            onClick={handledelete}
-                        >
-                            Search Bus
-                        </button>
 
 
 
