@@ -35,14 +35,14 @@ export default function HomePage() {
         })
     }
 
-
-
+        //search Function
+        
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const res = await api.get(`/bus/search?from=${from}&to=${to}`)
             setBusDetail(res.data.buses)
-            console.log(res.data)
+            
 
             localStorage.setItem(
                 "busSearch",

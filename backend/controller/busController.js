@@ -72,7 +72,7 @@ export const searchBus = async (req, res) => {
                     new RegExp(`^${to}$`, "i")
                 ]
             }
-        });
+        }).sort({ to:-1 });
 
         // Keep only routes where from comes before to
         const buses = routes.filter(route => {
