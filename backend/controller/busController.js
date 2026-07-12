@@ -50,43 +50,7 @@ export const addRoute = async (req, res) => {
 };
 
 
-// Search Bus
-// export const searchBus = async (req, res) => {
-
-//     try {
-
-//         const { stops} = req.query;
-
-//         if (!stops) {
-
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Please provide from and to locations"
-//             });
-
-//         }
-
-//         const buses = await Route.find({
-//             stops: new RegExp(`^${stops}$`, "i"),
-//             stops: new RegExp(`^${stops}$`, "i")
-//         }).populate("busId");
-
-//         res.status(200).json({
-//             success: true,
-//             total: buses.length,
-//             buses
-//         });
-
-//     } catch (error) {
-
-//         res.status(500).json({
-//             success: false,
-//             message: error.message
-//         });
-
-//     }
-
-// };
+        // BUS Route
 
 
 export const searchBus = async (req, res) => {

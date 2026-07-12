@@ -14,6 +14,7 @@ router.post("/add-bus", addBus);
 router.post("/add-route", addRoute);
 
 router.get("/search", searchBus);
+
 router.get("/:id", getBusRoute);
 
 export default router;
