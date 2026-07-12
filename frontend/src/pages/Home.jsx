@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { FaBus } from "react-icons/fa"
 import api from "../api/axios"
 import { Link, useNavigate } from "react-router"
+import { RxDotsVertical } from "react-icons/rx";
+
 
 export default function HomePage() {
 
@@ -12,6 +14,7 @@ export default function HomePage() {
         from: "",
         to: "",
     })
+    const [openMenu, setOpenMenu] = useState(false);
 
     const { from, to } = form;
 
@@ -35,14 +38,14 @@ export default function HomePage() {
         })
     }
 
-        //search Function
-        
+    //search Function
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const res = await api.get(`/bus/search?from=${from}&to=${to}`)
             setBusDetail(res.data.buses)
-            
+
 
             localStorage.setItem(
                 "busSearch",
@@ -52,17 +55,13 @@ export default function HomePage() {
                 })
             );
 
-
-
-
-
         } catch (err) {
 
         }
 
     }
 
-    
+
 
 
 
@@ -73,15 +72,41 @@ export default function HomePage() {
 
 
     return (
-        
+
         <div className="min-h-screen bg-green-100">
 
             {/* Header */}
             <div className="bg-white shadow-md py-8 px-4">
+                <button
+                    onClick={() => setOpenMenu(!openMenu)}
+                    className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 transition"
+                >
+                    < RxDotsVertical className="text-2xl text-gray-600" />
+                </button>
+
+                {openMenu && (
+                    <div className="absolute top-14 right-4 w-48 bg-white rounded-lg shadow-xl border z-50 overflow-hidden">
+                        <Link to="/developer">
+                            <button className="w-full text-left px-4 py-3 hover:bg-gray-100">
+                                🏠 Developer
+                            </button>
+                        </Link>
+
+                        <button className="w-full text-left px-4 py-3 hover:bg-gray-100">
+                            ⭐ Favorite Routes
+                        </button>
+
+                        <button className="w-full text-left px-4 py-3 hover:bg-gray-100">
+                            📍 Live Tracking
+                        </button>
+                    </div>
+                )}
+
 
                 <div className="max-w-md mx-auto text-center">
 
                     <FaBus className="mx-auto text-5xl text-green-600" />
+
 
                     <h1 className="text-3xl font-bold mt-3 text-gray-800">
                         Bihar Bus Route
