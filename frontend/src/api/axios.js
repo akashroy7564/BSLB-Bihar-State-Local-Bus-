@@ -1,7 +1,7 @@
 import axios, { Axios } from "axios";
 
 const api= axios.create({
-    baseURL:"http://localhost:5004/api"
+    baseURL:"https://bslb-bihar-state-local-bus.onrender.com/api"
 })
 
 export default api;
