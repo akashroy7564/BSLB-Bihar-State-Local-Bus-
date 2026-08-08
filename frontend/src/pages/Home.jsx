@@ -15,7 +15,7 @@ export default function HomePage() {
         to: "",
     })
     const [openMenu, setOpenMenu] = useState(false);
-    const [loading,setLoading]=useState(false)
+    const [loading, setLoading] = useState(false)
 
     const { from, to } = form;
 
@@ -175,89 +175,97 @@ export default function HomePage() {
                     {/* Scrollable Area */}
                     <div className="h-[420px] overflow-y-auto pr-2 space-y-4">
 
-                        {busDetail.length > 0 ? (
+                        {
+                            loading ? (
+                                <div className="flex justify-center items-center h-80">
+                                    <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+                                </div>
+                            ) :(
+                        
+
+                        busDetail.length > 0 ? (
                             busDetail.map((bus) => (
-                                <Link
-                                    key={bus._id}
-                                    to={`/bus/${bus._id}`}
-                                >
-                                    <div className="bg-gray-50 border rounded-xl p-4 hover:shadow-md transition">
-                                        {/* Top */}
-                                        <div className="flex justify-between items-center">
-                                            <div>
-                                                <h3 className="text-gray-500 text-sm   ">
-                                                    {bus.busName}
-                                                </h3>
+                        <Link
+                            key={bus._id}
+                            to={`/bus/${bus._id}`}
+                        >
+                            <div className="bg-gray-50 border rounded-xl p-4 hover:shadow-md transition">
+                                {/* Top */}
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <h3 className="text-gray-500 text-sm   ">
+                                            {bus.busName}
+                                        </h3>
 
-                                                <p className="text-lg font-bold text-gray-800">
-                                                    {bus.busNumber}
-                                                </p>
-                                            </div>
+                                        <p className="text-lg font-bold text-gray-800">
+                                            {bus.busNumber}
+                                        </p>
+                                    </div>
 
-                                            <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
-                                                {bus.busType}
+                                    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
+                                        {bus.busType}
+                                    </span>
+                                </div>
+
+                                {/* Route */}
+                                <div className="flex justify-between items-center mt-4 bg-white border rounded-lg p-3">
+                                    <div className="text-center">
+                                        <p className="text-xs text-gray-500">From</p>
+                                        <h4 className="font-semibold text-gray-800 capitalize">
+                                            {bus.from}
+                                        </h4>
+                                    </div>
+
+                                    <div className="flex-1 mx-4">
+                                        <div className="border-t-2 border-dashed border-gray-300 relative">
+                                            <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-1 text-lg">
+                                                🚌
                                             </span>
                                         </div>
-
-                                        {/* Route */}
-                                        <div className="flex justify-between items-center mt-4 bg-white border rounded-lg p-3">
-                                            <div className="text-center">
-                                                <p className="text-xs text-gray-500">From</p>
-                                                <h4 className="font-semibold text-gray-800 capitalize">
-                                                    {bus.from}
-                                                </h4>
-                                            </div>
-
-                                            <div className="flex-1 mx-4">
-                                                <div className="border-t-2 border-dashed border-gray-300 relative">
-                                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-1 text-lg">
-                                                        🚌
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div className="text-center">
-                                                <p className="text-xs text-gray-500">To</p>
-                                                <h4 className="font-semibold text-gray-800 capitalize">
-                                                    {bus.to}
-                                                </h4>
-                                            </div>
-                                        </div>
-
-                                        {/* Time */}
-                                        <div className="flex justify-between items-center mt-4">
-                                            <div className="text-center">
-                                                <p className="text-xs text-gray-500">
-                                                    Departure
-                                                </p>
-
-                                                <h4 className="font-bold text-green-600">
-                                                    {bus.depart}
-                                                </h4>
-                                            </div>
-
-                                            <div className="text-gray-400 text-2xl">
-                                                🕒
-                                            </div>
-
-                                            <div className="text-center">
-                                                <p className="text-xs text-gray-500">
-                                                    Arrival
-                                                </p>
-
-                                                <h4 className="font-bold text-red-500">
-                                                    {bus.arrival}
-                                                </h4>
-                                            </div>
-                                        </div>
                                     </div>
-                                </Link>
-                            ))
-                        ) : (
-                            <div className="flex items-center justify-center h-full text-gray-500">
-                                Search a route to view available buses.
+
+                                    <div className="text-center">
+                                        <p className="text-xs text-gray-500">To</p>
+                                        <h4 className="font-semibold text-gray-800 capitalize">
+                                            {bus.to}
+                                        </h4>
+                                    </div>
+                                </div>
+
+                                {/* Time */}
+                                <div className="flex justify-between items-center mt-4">
+                                    <div className="text-center">
+                                        <p className="text-xs text-gray-500">
+                                            Departure
+                                        </p>
+
+                                        <h4 className="font-bold text-green-600">
+                                            {bus.depart}
+                                        </h4>
+                                    </div>
+
+                                    <div className="text-gray-400 text-2xl">
+                                        🕒
+                                    </div>
+
+                                    <div className="text-center">
+                                        <p className="text-xs text-gray-500">
+                                            Arrival
+                                        </p>
+
+                                        <h4 className="font-bold text-red-500">
+                                            {bus.arrival}
+                                        </h4>
+                                    </div>
+                                </div>
                             </div>
-                        )}
+                        </Link>
+                        ))
+                        ) : (
+                        <div className="flex items-center justify-center h-full text-gray-500">
+                            Search a route to view available buses.
+                        </div>
+                        ))}
 
                     </div>
 
