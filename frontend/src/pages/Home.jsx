@@ -43,7 +43,6 @@ export default function HomePage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoading(true)
         try {
             const res = await api.get(`/bus/search?from=${from}&to=${to}`)
             setBusDetail(res.data.buses)
@@ -61,9 +60,7 @@ export default function HomePage() {
             console.log(err)
         }
 
-        finally{
-            setLoading(false)
-        }
+        
 
     }
 
