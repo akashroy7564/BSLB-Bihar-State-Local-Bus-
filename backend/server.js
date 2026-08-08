@@ -18,7 +18,7 @@ app.use(cors({
     
 }));
 // app.use(cookieParser());
-app.use(morgan())
+// app.use(morgan())
 app.use(helmet({
     crossOriginResourcePolicy: false
 }))
