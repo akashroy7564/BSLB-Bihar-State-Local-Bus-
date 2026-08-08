@@ -47,7 +47,6 @@ export default function HomePage() {
         try {
             const res = await api.get(`/bus/search?from=${from}&to=${to}`)
             setBusDetail(res.data.buses)
-            setLoading(false)
 
 
             localStorage.setItem(
@@ -59,7 +58,11 @@ export default function HomePage() {
             );
 
         } catch (err) {
+            console.log(err)
+        }
 
+        finally{
+            setLoading(false)
         }
 
     }
