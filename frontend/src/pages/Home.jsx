@@ -15,7 +15,7 @@ export default function HomePage() {
         to: "",
     })
     const [openMenu, setOpenMenu] = useState(false);
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
 
     const { from, to } = form;
 
@@ -178,15 +178,10 @@ export default function HomePage() {
                     {/* Scrollable Area */}
                     <div className="h-[420px] overflow-y-auto pr-2 space-y-4">
 
-                        {
-                            loading ? (
-                                <div className="flex justify-center items-center h-80">
-                                    <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-                                </div>
-                            ) :(
+                        
                         
 
-                        busDetail.length > 0 ? (
+                        {busDetail.length > 0 ? (
                             busDetail.map((bus) => (
                         <Link
                             key={bus._id}
@@ -268,7 +263,7 @@ export default function HomePage() {
                         <div className="flex items-center justify-center h-full text-gray-500">
                             Search a route to view available buses.
                         </div>
-                        ))}
+                        )}
 
                     </div>
 
