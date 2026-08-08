@@ -15,6 +15,7 @@ export default function HomePage() {
         to: "",
     })
     const [openMenu, setOpenMenu] = useState(false);
+    const [loading,setLoading]=useState(false)
 
     const { from, to } = form;
 
@@ -42,9 +43,11 @@ export default function HomePage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try {
             const res = await api.get(`/bus/search?from=${from}&to=${to}`)
             setBusDetail(res.data.buses)
+            setLoading(false)
 
 
             localStorage.setItem(
